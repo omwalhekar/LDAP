@@ -17,7 +17,8 @@ function authenticate(username, password) {
     } else {
       console.log("success");
       // searchUser();
-      addUser();
+      // addUser();
+      deleteUser();
     }
   });
 }
@@ -70,4 +71,15 @@ function addUser() {
     }
   });
 }
-authenticate("cn=Omkar,ou=users,ou=system", "1");
+
+function deleteUser() {
+  client.del("cn=foo1,ou=users,ou=system", err => {
+    if (err) {
+      console.log("err in delete user" + err);
+    } else {
+      console.log("deleted User");
+    }
+  });
+}
+// authenticate("cn=Omkar,ou=users,ou=system", "1");
+authenticate("uid=admin,ou=system", "secret");
