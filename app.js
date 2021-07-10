@@ -21,7 +21,9 @@ function authenticate(username, password) {
       // deleteUser();
       // addUserToGroup("cn=Administrators,ou=groups,ou=system");
       // deleteUserFromGroup("cn=Administrators,ou=groups,ou=system");
-      updateUser("cn=Omkar,ou=users,ou=system");
+      // updateUser("cn=Omkar,ou=users,ou=system");
+      // compare("cn=mishra,ou=users,ou=system");
+      modifyDN("cn=mishra,ou=users,ou=system");
     }
   });
 }
@@ -134,6 +136,28 @@ function updateUser(dn) {
       console.log("err in update user " + err);
     } else {
       console.log("add update users");
+    }
+  });
+}
+
+function compare(dn) {
+  client.compare(dn, "sn", "sirr", (err, matched) => {
+    if (err) {
+      console.log("err in compare user " + err);
+    } else {
+      //returns true if the user exists
+      //returns false if no user is found
+      console.log("result: " + matched);
+    }
+  });
+}
+
+function modifyDN(dn) {
+  client.modifyDN(dn, "cn=bar", err => {
+    if (err) {
+      console.log("err in modifyDN " + err);
+    } else {
+      console.log("DN changed");
     }
   });
 }
