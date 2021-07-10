@@ -20,7 +20,8 @@ function authenticate(username, password) {
       // addUser();
       // deleteUser();
       // addUserToGroup("cn=Administrators,ou=groups,ou=system");
-      deleteUserFromGroup("cn=Administrators,ou=groups,ou=system");
+      // deleteUserFromGroup("cn=Administrators,ou=groups,ou=system");
+      updateUser("cn=Omkar,ou=users,ou=system");
     }
   });
 }
@@ -114,6 +115,25 @@ function deleteUserFromGroup(groupName) {
       console.log("err in delete user from a group" + err);
     } else {
       console.log("deleted User in a group");
+    }
+  });
+}
+
+function updateUser(dn) {
+  const change = new ldap.Change({
+    //user 'add' as operation for adding a new attribute
+    //for updating existing attribute
+    operation: "replace",
+    modification: {
+      displayName: "347",
+    },
+  });
+
+  client.modify(dn, change, err => {
+    if (err) {
+      console.log("err in update user " + err);
+    } else {
+      console.log("add update users");
     }
   });
 }
