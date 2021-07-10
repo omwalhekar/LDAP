@@ -18,7 +18,8 @@ function authenticate(username, password) {
       console.log("success");
       // searchUser();
       // addUser();
-      deleteUser();
+      // deleteUser();
+      addUserToGroup("cn=Administrators,ou=groups,ou=system");
     }
   });
 }
@@ -78,6 +79,23 @@ function deleteUser() {
       console.log("err in delete user" + err);
     } else {
       console.log("deleted User");
+    }
+  });
+}
+
+function addUserToGroup(groupName) {
+  const change = new ldap.Change({
+    operation: "add",
+    modification: {
+      uniqueMember: "cn=Omkar,ou=users,ou=system",
+    },
+  });
+
+  client.modify(groupName, change, err => {
+    if (err) {
+      console.log("err in add user in a group" + err);
+    } else {
+      console.log("Added User in a group");
     }
   });
 }
