@@ -19,7 +19,8 @@ function authenticate(username, password) {
       // searchUser();
       // addUser();
       // deleteUser();
-      addUserToGroup("cn=Administrators,ou=groups,ou=system");
+      // addUserToGroup("cn=Administrators,ou=groups,ou=system");
+      deleteUserFromGroup("cn=Administrators,ou=groups,ou=system");
     }
   });
 }
@@ -87,7 +88,7 @@ function addUserToGroup(groupName) {
   const change = new ldap.Change({
     operation: "add",
     modification: {
-      uniqueMember: "cn=Omkar,ou=users,ou=system",
+      uniqueMember: "cn=ravi,ou=users,ou=system",
     },
   });
 
@@ -99,5 +100,24 @@ function addUserToGroup(groupName) {
     }
   });
 }
-// authenticate("cn=Omkar,ou=users,ou=system", "1");
-authenticate("uid=admin,ou=system", "secret");
+
+function deleteUserFromGroup(groupName) {
+  const change = new ldap.Change({
+    operation: "delete",
+    modification: {
+      uniqueMember: "cn=ravi,ou=users,ou=system",
+    },
+  });
+
+  client.modify(groupName, change, err => {
+    if (err) {
+      console.log("err in delete user from a group" + err);
+    } else {
+      console.log("deleted User in a group");
+    }
+  });
+}
+
+//authenticates the user that is going to access the LDAP
+authenticate("cn=Omkar,ou=users,ou=system", "1");
+// authenticate("uid=admin,ou=system", "secret");
