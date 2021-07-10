@@ -11,7 +11,11 @@ function authenticate(username, password) {
     url: "ldap://127.0.0.1:10389",
   });
   const opts = {
-    filter: "(objectClass=*)",
+    //put an AND condition as below
+    // filter: "(&(cn=Omkar)(sn=Walhekar))",
+
+    //use an OR condition as below
+    filter: "(|(uid=2)(sn=Walhekar))",
     scope: "sub",
     attributes: ["sn", "cn"],
   };
@@ -20,7 +24,7 @@ function authenticate(username, password) {
     if (err) {
       console.log("Error in bind: ", err);
     } else {
-      client.search("ou=configuration,ou=system", opts, (err, res) => {
+      client.search("ou=users,ou=system", opts, (err, res) => {
         if (err) {
           console.log("Error in search: ", err);
         } else {
